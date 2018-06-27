@@ -14,7 +14,7 @@ def conv_layer(x, filter_height, filter_width,
 											input_channels / groups, num_filters],
 											initializer = tf.random_normal_initializer(mean = 0, stddev = 0.01))
 
-		if (name[4] == '1' or name[4] = '3'):
+		if (name[4] == '1' or name[4] == '3'):
 			b = tf.get_variable('biases', shape = [num_filters], initializer = tf.constant_initializer(0.0))
 		else:
 			b = tf.get_variable('biases', shape = [num_filters], initializer = tf.constant_initializer(1.0))
