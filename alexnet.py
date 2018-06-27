@@ -20,7 +20,7 @@ def conv_layer(x, filter_height, filter_width,
 			b = tf.get_variable('biases', shape = [num_filters], initializer = tf.constant_initializer(1.0))
 
 
-	if group == 1:
+	if groups == 1:
 		conv = tf.nn.conv2d(x, W, strides = [1, stride, stride, 1], padding = padding)
 
 	else:
@@ -48,12 +48,12 @@ def fc_layer(x, input_size, output_size, name, relu = True):
 
 		b = tf.get_variable('biases', shape = [output_size], initializer = tf.constant_initializer(1.0))
 
-		z = tf.nn.bias_addd(tf.matmul(x, W), b)
+		z = tf.nn.bias_add(tf.matmul(x, W), b, name = scope.name)
 
 	if relu:
 
 		a = tf.nn.relu(z)
-		return relu
+		return a
 
 	else:
 		return z
@@ -64,14 +64,14 @@ def max_pool(x, name, filter_height = 3, filter_width = 3, stride = 2, padding =
 						strides = [1, stride, stride, 1], padding = padding,
 						name = name)
 
-def lrn(x, radius = 5, alpha = 1e-04, beta = 0.75, bias = 2.0):
+def lrn(x, name, radius = 5, alpha = 1e-04, beta = 0.75, bias = 2.0):
 
 	return tf.nn.local_response_normalization(x, depth_radius = radius, alpha = alpha,
 												beta = beta, bias = bias, name = name)
 
-def dropout(x, keep_prob = 0.5):
+def dropout(x, keep_prob):
 
-	return tf.nn.dropout(x, keep_prob)
+	return tf.nn.dropout(x, keep_prob = keep_prob)
 
 # Creating the AlexNet Model
 
@@ -95,11 +95,11 @@ class AlexNet(object):
 		norm2 = lrn(conv2, name = 'norm2')
 		pool2 = max_pool(norm2, padding = 'VALID', name = 'pool2')
 
-		conv3 = conv_layer(pool2, 3, 3, 384, 1, name = 'conv3')
+		conv3 = conv_layer(pool2, 3, 3, 384, 1, name = 'conv3', padding = 'SAME')
 
-		conv4 = conv_layer(conv3, 3, 3, 384, 1, groups = 2, name = 'conv4')
+		conv4 = conv_layer(conv3, 3, 3, 384, 1, groups = 2, name = 'conv4', padding = 'SAME')
 
-		conv5 = conv_layer(conv4, 3, 3, 256, 1, groups = 2, name = 'conv5')
+		conv5 = conv_layer(conv4, 3, 3, 256, 1, groups = 2, name = 'conv5', padding = 'SAME')
 		pool5 = max_pool(conv5, padding = 'VALID', name = 'pool5')
 
 		flattened = tf.reshape(pool5, [-1, 6 * 6 * 256])
