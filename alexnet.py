@@ -87,7 +87,7 @@ class AlexNet(object):
 
 	def create(self):
 
-		conv1 = conv_layer(self.X, 11, 11, 96, 4, padding = 'VALID', name = 'conv1')
+		conv1 = conv_layer(self.X, 11, 11, 96, 2, name = 'conv1')
 		norm1 = lrn(conv1, name = 'norm1')
 		pool1 = max_pool(norm1, padding = 'VALID', name = 'pool1')
 
@@ -95,15 +95,15 @@ class AlexNet(object):
 		norm2 = lrn(conv2, name = 'norm2')
 		pool2 = max_pool(norm2, padding = 'VALID', name = 'pool2')
 
-		conv3 = conv_layer(pool2, 3, 3, 384, 1, name = 'conv3', padding = 'SAME')
+		conv3 = conv_layer(pool2, 3, 3, 384, 1, name = 'conv3')
 
-		conv4 = conv_layer(conv3, 3, 3, 384, 1, groups = 2, name = 'conv4', padding = 'SAME')
+		conv4 = conv_layer(conv3, 3, 3, 384, 1, groups = 2, name = 'conv4')
 
-		conv5 = conv_layer(conv4, 3, 3, 256, 1, groups = 2, name = 'conv5', padding = 'SAME')
+		conv5 = conv_layer(conv4, 3, 3, 256, 1, groups = 2, name = 'conv5')
 		pool5 = max_pool(conv5, padding = 'VALID', name = 'pool5')
 
-		flattened = tf.reshape(pool5, [-1, 6 * 6 * 256])
-		fc6 = fc_layer(flattened, 6 * 6 * 256, 4096, name = 'fc6')
+		flattened = tf.reshape(pool5, [-1, 1 * 1 * 256])
+		fc6 = fc_layer(flattened, 1 * 1 * 256, 4096, name = 'fc6')
 		dropout6 = dropout(fc6, self.KEEP_PROB)
 
 		fc7 = fc_layer(dropout6, 4096, 4096, name = 'fc7')
