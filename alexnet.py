@@ -116,7 +116,7 @@ class AlexNet(object):
 
 	def __init__(self, x, keep_prob, num_classes):
 
-        """Create the graph of the AlexNet model.
+		"""Create the graph of the AlexNet model.
 
         Args:
             x: Placeholder for the input tensor.
