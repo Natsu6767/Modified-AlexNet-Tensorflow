@@ -13,3 +13,5 @@ Beside the comments in the code itself, I also wrote an article which you can fi
 
 - `alexnet.py`: Class with the graph definition of the AlexNet.
 - `AlexNet Train.ipynb`: Notebook to train and test the implementation of AlexNet.
+
+If you are having trouble viewing the notebook file, click [here](http://nbviewer.jupyter.org/github/Natsu6767/Modified-AlexNet-Tensorflow/blob/master/AlexNet%20Train.ipynb).
