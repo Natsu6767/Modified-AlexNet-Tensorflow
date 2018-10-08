@@ -1,6 +1,6 @@
 # Modified Implementation of AlexNet
 
-This AlexNet implementation in this repository is based on 
+The AlexNet implementation in this repository is based on 
 the implementation by [kratzert](https://github.com/kratzert/finetune_alexnet_with_tensorflow).
 
 The AlexNet architecture in this implementation deviates from the
